@@ -1,0 +1,82 @@
+{% extends 'page.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+
+    <title>
+        File Type Validation while
+        Uploading it using JavaScript
+    </title>
+
+    <style>
+        h1 {
+            color: green;
+        }
+
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+      Financepeer
+    </h1>
+
+    <h3>
+        Validation of file type while
+        uploading using JavaScript?
+    </h3>
+
+    <!-- File input field -->
+
+    <p>Upload an Json file</p>
+     <form method="post" action="{% url 'uploadfiledata' %}">
+  {% csrf_token %}
+
+        <input type="hidden" id="uploadTextValue" name="uploadTextValue"/>
+
+    <input type="file" id="uploadFileId"
+        onchange="return fileValidation()" />
+
+<input type="submit" value="Submit" class="submit-button"/>
+
+     </form>
+
+    <!-- Image preview -->
+    <div id="imagePreview"></div>
+    <script>
+        function fileValidation() {
+            var fileInput =
+                document.getElementById('uploadFileId');
+
+            var filePath = fileInput.value;
+
+            // Allowing file type
+            var allowedExtensions =
+                /(\.json)$/i;
+
+            if (!allowedExtensions.exec(filePath)) {
+                alert('Invalid file type');
+                fileInput.value = '';
+                return false;
+            }else{
+                   var oFReader = new FileReader();
+<!--                      oFReader.readAsDataURL(document.getElementById("uploadFileId").files[0]);-->
+                      oFReader.onload = function(oFREvent) {
+                      console.log("file Data : "+oFREvent.target.result);
+                      document.getElementById("uploadTextValue").value = oFREvent.target.result;
+                  };
+                oFReader.readAsText(document.getElementById("uploadFileId").files[0]);
+            }
+        }
+    </script>
+</body>
+
+{% endblock %}

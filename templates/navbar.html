@@ -1,0 +1,19 @@
+<nav class="navbar">
+  <div class="main-menu">
+      {% load static %}
+  </div>
+ <img src="{% static 'images/finance.jpg' %}" style="height: 50px;margin-right: 80px">
+    <h1 style="margin-right: 30px">Welcome to Financepeer </h1>
+  <div class="user-menu">
+    <ul>
+      {% if user.is_authenticated %}
+
+      <li><a href="{% url 'logout' %}"><img src="{% static 'images/logout.jpg' %}" style="height: 40px"></a></li>
+      {% else %}
+
+      <li><a href="{% url 'login' %}">Login</a></li>
+      <li><a href="{% url 'register' %}">Register</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
